@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { fetchCars, addCar, deleteCar } from "../services/http";
+import { fetchCars, addCar, updateCar, deleteCar } from "../services/http";
 
 export interface Car {
   _id?: string;
@@ -30,20 +30,23 @@ export default function Home() {
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
-    // if (editCarId) {
-    //   // Update Car logic
-    //   await updateCar(editCarId, newCar);
-    //   setCars(cars.map(car => car._id === editCarId ? { ...car, ...newCar } : car));
-    //   setEditCarId(null);
-    // } else {
-    //   // Add New Car logic
-    //   const result = await addCar(newCar);
-    //   setCars([...cars, { ...newCar, _id: result.data.insertedId }]);
-    // }
+    if (editCarId) {
+      // Update car logic
+      await updateCar(editCarId, newCar);
+      setCars(cars.map(car => car._id === editCarId ? { ...car, ...newCar } : car));
+      setEditCarId(null);
+    } else {
+      // Add new car logic
       const result = await addCar(newCar);
       setCars([...cars, { ...newCar, _id: result.data.insertedId }]);
+    }
 
     setNewCar({ model_name: "", plate_number: "", color: "" });
+  };
+
+  const handleEdit = (car: Car) => {
+    setNewCar({ model_name: car.model_name, plate_number: car.plate_number, color: car.color });
+    setEditCarId(car._id ?? null);
   };
 
   const handleDelete = async (id: string) => {
@@ -60,6 +63,8 @@ export default function Home() {
             <strong>Model Name:</strong> {car.model_name} <br />
             <strong>Plate Number:</strong> {car.plate_number} <br />
             <strong>Color:</strong> {car.color} <br />
+            <button onClick={() => handleEdit(car)}>Update</button>
+            <br />
             <button onClick={() => handleDelete(car._id!)}>Delete</button>
             <br />
             <br />
@@ -67,7 +72,7 @@ export default function Home() {
         ))}
       </ul>
 
-      <h2>{editCarId ? "Edit Car" : "Add New Car"}</h2>
+      <h2>{editCarId ? "Update Car" : "Add New Car"}</h2>
       <form onSubmit={handleSubmit}>
         <div>
           <label>

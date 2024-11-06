@@ -25,7 +25,19 @@ export async function POST(request: Request) {
   });
 }
 
+export async function PUT(request: Request) {
+  const client = await connectDatabase();
+  const { _id, ...updatedCar } = await request.json();
 
+  const db = client.db('db01');
+  const result = await db.collection('cars').updateOne(
+    { _id: new ObjectId(_id) },
+    { $set: updatedCar }
+  );
+
+  client.close();
+  return NextResponse.json({ message: "Car updated successfully", data: result });
+}
 export async function DELETE(request: Request) {
   const client = await connectDatabase();
   const { id } = await request.json(); 

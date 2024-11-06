@@ -12,7 +12,7 @@ export async function addCar(newCar: Car) {
 }
 
 export async function updateCar(carId: string, updatedCar: Car) {
-  const response = await api.put(`/cars/${carId}`, updatedCar);
+  const response = await api.put(`/cars`, { _id: carId, ...updatedCar });
   return response.data;
 }
 
