@@ -26,9 +26,9 @@ export async function POST(request: Request) {
 }
 
 
-export async function DELETE(request: Request, _id: string) {
+export async function DELETE(request: Request) {
   const client = await connectDatabase();
-  const { id } = await request.json();
+  const { id } = await request.json(); 
 
   const db = client.db('db01');
   const result = await db.collection('cars').deleteOne({ _id: new ObjectId(id) });
