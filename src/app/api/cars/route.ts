@@ -1,12 +1,8 @@
 "use server";
 import { NextResponse } from "next/server";
-<<<<<<< HEAD
 import { connectDatabase, getAllDocuments, insertDocument, deleteDocuments } from "@/services/mongo";
 import { ObjectId } from "mongodb";
 
-=======
-import { connectDatabase, getAllDocuments, insertDocument } from "@/services/mongo";
->>>>>>> 13ef3c17a319df743cf16a5e12787f6a1ac086d4
 
 export async function GET(request: Request) {
   const client = await connectDatabase();
@@ -19,13 +15,8 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   const client = await connectDatabase();
-<<<<<<< HEAD
   const newCar = await request.json();
   const result = await insertDocument(client, 'cars', newCar); 
-=======
-  const newCar = await request.json(); // Parse the JSON body
-  const result = await insertDocument(client, 'cars', newCar); // Insert the new document
->>>>>>> 13ef3c17a319df743cf16a5e12787f6a1ac086d4
   client.close();
 
   return NextResponse.json({
@@ -33,7 +24,6 @@ export async function POST(request: Request) {
     data: result,
   });
 }
-<<<<<<< HEAD
 
 
 export async function DELETE(request: Request, _id: string) {
@@ -46,5 +36,3 @@ export async function DELETE(request: Request, _id: string) {
   client.close();
   return NextResponse.json({ message: "Car deleted successfully", data: result });
 }
-=======
->>>>>>> 13ef3c17a319df743cf16a5e12787f6a1ac086d4

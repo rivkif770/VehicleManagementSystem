@@ -21,7 +21,6 @@ export async function getAllDocuments(client: any, collection: string) {
    return documents;
 }
 
-<<<<<<< HEAD
 export async function deleteDocuments(client: any, collection: string, plateNumber: number) {
    const db = client.db('db01');
    const result = await db.collection(collection).deleteDocuments(plateNumber);
@@ -29,8 +28,6 @@ export async function deleteDocuments(client: any, collection: string, plateNumb
 
 }
 
-=======
->>>>>>> 13ef3c17a319df743cf16a5e12787f6a1ac086d4
 
 
 
